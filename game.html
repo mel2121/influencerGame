@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+<head>
+  <link rel="stylesheet" type="text/css" href="theme.css">
+</head>
+    <title>Hello Game</title>
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+    <script type="text/babel">
+      class App1 extends React.Component {
+  constructor(props){
+    super(props);
+      this.state={
+        followers:0,
+        followerTotal:1000,
+        story:'So you want to be a famous influencer? The right mix of content and daring might get you there.  Select career moves from the buttons below. Run out of money before reaching 5,000 subscribers, and you will be back looking for off camera work.',
+       trending: 'not yet',
+        moves:0,
+        cash:100,
+        oddPersona:0,
+        sym:'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+    }
+    this.followChange=this.followChange.bind(this);
+    this.sponCon=this.sponCon.bind(this);
+    this.confess=this.confess.bind(this);
+    this.runGame=this.runGame.bind(this);
+    this.tour=this.tour.bind(this);
+    this.niche=this.niche.bind(this);
+    this.newGame=this.newGame.bind(this);
+  }
+  
+  followChange =() => {
+    var el=Math.floor(Math.random()*10);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (max - min)) + min),
+      followerTotal:  this.state.followerTotal +this.state.followers,      story:"Stunt premise: " + stunts[el],
+               cash: this.state.cash-25,
+               sym:pic2[el+20],
+  }
+    })
+    }
+  sponCon =() => {
+    var el=Math.floor(Math.random()*10);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (maxS - minS)) + minS),
+      followerTotal:  this.state.followerTotal +this.state.followers,      story:"SponCon: " + sponConSpots[el],
+            cash: this.state.cash+30,  
+               sym:pic2[el+30],
+  }
+    })
+    }
+  confess =() => {
+    var el=Math.floor(Math.random()*10);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (maxC - minC)) + minC),
+      followerTotal:  this.state.followerTotal +this.state.followers, 
+              story:"Getting real: " + confessions[el],
+               sym:pic2[el+10],
+               cash: this.state.cash-5,
+              }
+    })
+    }
+  
+   niche =() => {
+     var el=Math.floor(Math.random()*12);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (maxC - minC)) + minC),
+      followerTotal:  this.state.followerTotal +this.state.followers, 
+              story:"New niche: " + niches[el],
+               cash: this.state.cash-20,
+               sym:pic2[el+40],
+              }
+    })
+    }
+  tour =() => {
+    var el=Math.floor(Math.random()*10);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (maxC - minC)) + minC),
+      followerTotal:  this.state.followerTotal +this.state.followers,  
+              story:"World tour: " + tours[el],
+               cash: this.state.cash+20,
+               sym:pic2[el],
+              }
+    })
+    }
+  newGame =() => {
+    
+    this.setState(prevState => {
+       return {followers:  0,
+      followerTotal:  1000,  
+              story:'So you want to be a famous influencer? The right mix of content and daring might get you there.  Select career moves from the buttons below. Run out of money before reaching 5,000 subscribers, and you will be back looking for off camera work.',
+               cash: 100,
+               sym:'https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60'
+              }
+    })
+    }
+  
+   runGame =() => {
+     var el=Math.floor(Math.random()*10);
+    this.setState(prevState => {
+       return {followers:  (Math.floor(Math.random() * (maxC - minC)) + minC),
+       story:"Your tour: " + stunts[el],
+              sym:pic2[el],
+              }
+    })
+    }
+  
+  render() {
+  //  const all="https://images.dog.ceo/breeds/deerhound-scottish/n02092002_10693.jpg";
+    // const allThat = this.state.all;
+    const winner=checkWinner(this.state.followerTotal);
+    const cashFlow = runningLow(this.state.cash);
+    let status;
+    let winnerStatus="regular";
+    let currentPic;
+    let newID;
+    let lifeAdvice;
+    if(winner){
+      status= 'you did it';
+      winnerStatus="doubleWinner";
+      currentPic="https://images.unsplash.com/photo-1519834785169-98be25ec3f84?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60";
+   newID="largerThanLife";
+      lifeAdvice="You did it! You're internet famous. Go take a sunset selfie!"
+    } else if (cashFlow) {
+      status='you are broke; time to get another job';  
+     currentPic="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60";
+      newID="largerThanLife";
+      lifeAdvice="Out of cash. Time to get a job off camera."
+    }
+      
+    else {
+      status= 'keep trying';
+      currentPic="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+      newID="little";
+    }
+   
+    return (
+   
+      <div className="grid-container">
+        <div className="item1">
+       <div className={winnerStatus}>
+        <img id={newID} src={currentPic} />
+        <h4>{lifeAdvice}</h4></div>
+          <div className="item2">
+        <h1>The Influencer Game</h1>
+          </div>
+          <div className="item3">
+        <h3>&#11088;
+        &#9996; &#127754;&#127754;Your move...&#11088;
+          &#9996; &#127754;</h3></div>
+       <div className=".flex-container"> <button className="choiceButton" onClick={this.followChange}>Do a Stunt</button>
+       <button className="choiceButton" onClick={this.sponCon}>Sponsored</button>
+        <button className="choiceButton" onClick={this.confess}>Confessional</button>
+       <button className="choiceButton" onClick={this.niche}>Pick a Niche</button>
+       <button className="choiceButton" onClick={this.tour}>Go on tour</button>
+       <button className="choiceButton" onClick={this.newGame}>New game</button></div>
+        <div className="item9"> 
+        <div className="polaroid">
+  <img src={this.state.sym} />
+  <div className="container">
+    <div className="cardProfile">
+    <span>&#128153;&#128172;</span></div>
+    <div className="item11">
+    <span>Subscriber gain: {this.state.followers}</span>
+    </div>
+  <p>{this.state.story}</p>
+          </div>
+          </div></div>
+       <div className="item12">
+        <h2>
+           Previous Total: {this.state.followerTotal}</h2></div>
+          <div className="item13">
+          <h2>  <span>   Cash: ${this.state.cash}</span></h2></div>
+       
+        
+        
+        </div>
+        </div>
+    )
+  }
+  
+}
+
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+const max=1000;
+  const min=-500;
+const maxS=1000;
+  const minS=500;
+const maxC=100;
+  const minC=-100;
+var symbols2=[{name:'bob'},{name:'fgbfg'},{name:'fbfg'}];
+
+
+var tours =[
+  'So real, it is not at all',
+'Town hall talks where you give me ideas to steal – I mean collaborate',
+'Bring your mirrors, and we’ll star at ourselves – together. If you forget yours, will have tour mirrors on sale.',
+'It is all about you – (paying me) – we will talk about how you make me the star I am – thanks!',
+'Glitter and Guacamole – No double dipping, please.',
+'How to be an influencer like me – well, a little like me',
+ 'Every city - well a few cities',
+'Discourse and the Discount Hut',
+'Library Talks - Enough with the boring books',
+'Hear about me - in person'
+
+];
+var confessions =[
+  'Spend too much time in front of the mirror',
+'Never got my degree, but my parents think I did',
+'I want to be a cat sometimes',
+'Hate the sound of my voice - not enough to stop this',
+'Having doubts about my merch line. Comment about your love for my merch to help',
+'Afraid of plastic bags',
+'These videos are weird because I am the only one doing the talking...',
+  'I still use crayons - at restaurants',
+'I can not remember when I changed my socks. Is that weird?',
+'I still use my ex\'s streaming account'
+
+];
+
+var stunts=[
+  'Paint your neighborhood house for Halloween – that is a new one.  You decide on your friendly neighbor. When the first roller of orange goes on, you see that it will not work with the aluminum siding.  You have invested a lot in the paint already and decide to go prank your less friendly neighbor.  Surprise, he is even less friendly than before and threatens to call the cops unless you pony up the money to cover it.  Happy Halloween.',
+'You turn your parents sunken living room into a ball pit befitting an arcade.  You and your friends frolic for hours.  One QVM glass statues is broken when a pal does a backflip off the ottoman.  Time to replace the chair.  To be fair, dogs do better stunts on your channel.',   
+'Dye hair and clothes matching punch mix blue.  Works but leaves a hue on the white fabric chair. Time to buy Mom a new chair',
+'Walk on stilts in a drive through. Out money for food and bandages after the fall while reaching for the food',
+'Take cat in for laser hair removal with discount coupon.  Technician refuses at first than says okay. While trying to fit the cat with goggle it attacks.  You pay for ER visit for the technician.  Good thing whiskers was up to date on her vaccines. ',
+'Synchronized rollerblade routine in local library',
+'Scoot against traffic wearing a unicorn suit. Traffic ticket awarded!',
+'Hitching a skateboard ride off a postal car.  ',
+'Plant an iguana in the sand trap at golf course. golfers and exotic rescue group angered.',
+'Take favorite shirt to a frame shop for a custom frame. Matting is pricey.'
+];
+
+var sponConSpots =[
+  'Deli cut flavored toothpaste – yes, just the thing to get the taste of deli meat out-wait.  Okay, who doesn’t love pastrami in the morning?  Find it in your deli aisle – I mean toothpaste',
+'Banana slicer – love bananas? Hate the tedium of slicing them by hand? I love digging around my drawers in the kitchen to find this yellow plastic grid in the shape of a banana.  Then I just peel and press – and maybe a medium firm one.',
+
+'Pet Pebble – when your rock is taking too much space, the pet pebble is the perfect companion.  Just make sure you don’t sweep it up.',
+'Mustard gun – would you rather squeeze a plastic trigger than a bottle, here’s the mustard gun.  You still might get it on your shirt.',
+'Savory and chocolate jelly rolls – soft, salty, and turns your teeth black',
+'Lite water – same taste – maybe less filling',
+'Abs squeezer – build fat burner ab muscle as you struggle to stay conscious in this device – another video after you come to',
+'Grits milk – it’s chunky – trust me',
+  'Air Conditioned shoes - not sure about this one either',
+'Butter stick - faster and with more plastic'
+
+]
+
+var niches =[
+  'minimalist.  Time to toss all of your stuff and some of your roommates too.  They are upset and yell at you while you search for the can opener.  Did that go too?',
+'financial guru.  Get out there and tell people how to save money and find a second job – I mean a side hustle.', 
+'Metal detecting. The unit set you back, and your retired uncle just made fun on the machine model.  After two hours in park, you’ve found a rusty washer.  Time to salt the land with some pocket change.', 
+'Alien expert. Nothing yet. Getting cold.',  
+'Toy unboxer. Enough work for today.', 
+'Animals – seeking out local wildlife', 
+'Games.  How do I get this thing off my head?', 
+'Fitness - nah, rather get a coffee', 
+'Dieting.  This could take a week.', 
+'Hair care.  Today we will be work on this plant...', 
+'How to fix everything.  First step, what are these?', 
+'Fast food reviews.  More subscribers mean better food reviews'
+];
+function checkWinner(amount){
+  if(amount>5000){
+    return 'you did it'
+  } else {
+    return null;
+  }
+};
+function runningLow(amount){
+  if(amount<1){
+    return 'out of cash'
+  } else {
+    return null;
+  }
+};
+
+
+
+var pic2=[
+  "https://images.unsplash.com/photo-1482615741284-da25ca66360d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1542107617-e760dc92dcdd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1497519098947-a305f214d3bc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1447939327228-66b1930fc80a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1526948128573-703ee1aeb6fa?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1521748818577-6fc32a304fd8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1514772145214-48bce0dff081?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1511027264035-14f38d508f11?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1458891216473-4f26bb4eb40e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1520783077-5c05dd1fdc99?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1534135954997-e58fbd6dbbfc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1453738773917-9c3eff1db985?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1544401447-4d2b8ab25808?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1518298029706-560c6e24adc7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1516748413653-9829208eeb5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1510672277783-ea03bdd8b602?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1521738218175-2b6670637c6c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1547853257-b41fad87221c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1517883506247-158964404018?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1533489385241-41c2ffd7997b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1542129297-6456e1a57f78?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1528836357230-34b260feb885?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1511858240726-f89c6f5ba6e1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1461367463590-f58655179fd8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1470883086119-f9dda6fdb990?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1465161191540-aac346fcbaff?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1521390188846-e2a3a97453a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1536228891610-d27ef66f7110?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/uploads/1411608784986fb0958de/7f129cbf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1528750717929-32abb73d3bd9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1518311297794-ec7298ffba64?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1484100356142-db6ab6244067?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1524002232583-bbe9d9d2eebd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1528750997573-59b89d56f4f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1515555230216-82228b88ea98?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1505491589101-5c7976eeb482?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1449247709967-d4461a6a6103?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1534951009808-766178b47a4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1535924407980-e425c7be1b9b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1460804198264-011ca89eaa43?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1518770352423-dce09a3d3307?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1525540810550-5032f5d191b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1519859660545-3dea8ddf683c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1473348164936-13be821e561c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/reserve/oIpwxeeSPy1cnwYpqJ1w_Dufer%20Collateral%20test.jpg?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
+"https://images.unsplash.com/photo-1470053053191-43e7bd267838?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+];
+ReactDOM.render(<App1 />,document.getElementById('root'));
+    </script>
+
+  </body>
+</html>
